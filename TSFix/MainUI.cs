@@ -395,7 +395,7 @@ namespace TSFix
             var PIDCCErrorCount = new ulong[8192];
             var PIDTEICount = new ulong[8192];
             var LastPIDCC = new sbyte[8192];
-            long LastCorruptPos = 0;
+            long LastCorruptPos = -1;
             for (int i = 0; i < LastPIDCC.Length; i++)
                 LastPIDCC[i] = -1;
 
@@ -473,7 +473,7 @@ namespace TSFix
                         CheckResult.Add(PID, PIDTEICount[PID], PIDCCErrorCount[PID], LastPacketPos);
                         if(CorruptStartMatchPos == -1)
                         {
-                            if (LastPacketPos - LastCorruptPos >= Padding + MatchLength)
+                            if (LastPacketPos - LastCorruptPos > Padding + MatchLength)
                             {
                                 CorruptStartMatchPos = LastPacketPos - Padding - MatchLength;
 
@@ -496,7 +496,7 @@ namespace TSFix
 
                                 if (CorruptStartMatchPos == -1)
                                 {
-                                    if (LastPacketPos - LastCorruptPos >= Padding + MatchLength)
+                                    if (LastPacketPos - LastCorruptPos > Padding + MatchLength)
                                     {
                                         CorruptStartMatchPos = LastPacketPos - Padding - MatchLength;
                                     }
@@ -508,7 +508,7 @@ namespace TSFix
 
                     }
 
-                    if (CorruptStartMatchPos != -1 && LastPacketPos >= LastCorruptPos + Padding + MatchLength)
+                    if (CorruptStartMatchPos != -1 && LastPacketPos > LastCorruptPos + Padding + MatchLength)
                     {
                         MatchResult.Add(new MatchResType(CorruptStartMatchPos, LastCorruptPos + TS_PACKET_SIZE + Padding, MatchLength));
                         CorruptStartMatchPos = -1;
@@ -563,7 +563,7 @@ namespace TSFix
             stopwatch.Start();
 
             var LastPIDCC = new sbyte[8192];
-            long LastCorruptPos = 0;
+            long LastCorruptPos = -1;
             for (int i = 0; i < LastPIDCC.Length; i++)
                 LastPIDCC[i] = -1;
 
@@ -757,7 +757,7 @@ namespace TSFix
             var FileNameOutput = Args["FileNameOutput"] as string;
             var PatchResult = Args["PatchResult"] as List<PatchResult>;
             var PatchSuccessResult = new List<PatchResult>();
-            byte[] buffer = new byte[2048];
+            byte[] buffer = new byte[4096];
             bool Exit = false;
             long LastFilePos = 0;
             var Result = new Dictionary<string, object>();

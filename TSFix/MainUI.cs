@@ -268,7 +268,7 @@ namespace TSFix
                     {
                         string Info = $"Corrupt Match: Start {match.Item1}({(match.Item1 / 1024.0 / 1024).ToString("F3")} MB)\t" +
                             $"End: {match.Item2}({(match.Item2 / 1024.0 / 1024).ToString("F3")} MB)\t" +
-                            $"Lnegth:{match.Item3}({(match.Item3 / 1024.0 / 1024).ToString("F0")} MB)";
+                            $"Length:{match.Item3}({(match.Item3 / 1024.0 / 1024).ToString("F0")} MB)";
                         MatchResultSB.AppendLine(Info);
                     }
 
@@ -309,7 +309,7 @@ namespace TSFix
                         PatchResultSB.AppendLine(patch.ToString());
                     }
 
-                    LogTBox.Text += $"Patch result (total: {PatchResultList.Count}){Environment.NewLine}{PatchResultSB}";
+                    LogTBox.Text += $"Patch compute result (total: {PatchResultList.Count}){Environment.NewLine}{PatchResultSB}";
                 }
             }
             catch (Exception _e)
